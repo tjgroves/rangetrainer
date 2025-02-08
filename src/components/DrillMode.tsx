@@ -11,16 +11,14 @@ function Feedback({ isCorrect, show }: { isCorrect: boolean; show: boolean }) {
   useEffect(() => {
     if (show) {
       setShouldRender(true);
-      // Small delay to ensure the animation starts after the element is rendered
       requestAnimationFrame(() => {
         setIsVisible(true);
       });
     } else {
       setIsVisible(false);
-      // Wait for the animation to complete before removing from DOM
       const timer = setTimeout(() => {
         setShouldRender(false);
-      }, 500); // Match this with the animation duration
+      }, 500);
       return () => clearTimeout(timer);
     }
   }, [show]);
@@ -77,7 +75,6 @@ export function DrillMode({
   const [lastAnswerCorrect, setLastAnswerCorrect] = useState(false);
   const feedbackTimeoutRef = useRef<number>();
 
-  // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
       if (feedbackTimeoutRef.current) {
@@ -102,7 +99,6 @@ export function DrillMode({
   const handleAnswer = (answer: boolean) => {
     if (!currentHand) return;
 
-    // Clear any existing timeout
     if (feedbackTimeoutRef.current) {
       clearTimeout(feedbackTimeoutRef.current);
     }
@@ -122,7 +118,7 @@ export function DrillMode({
     const hasIncorrectHands = incorrectHands.length > 0;
 
     return (
-      <div className="min-h-[80vh] w-full max-w-4xl mx-auto px-4 py-8 flex flex-col items-center">
+      <div className="w-full max-w-4xl mx-auto px-4 py-8 flex flex-col items-center">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-poker-violet-400/20 to-poker-violet-600/20 mb-4">
             <Trophy className="w-10 h-10 text-poker-violet-400" />
@@ -178,43 +174,44 @@ export function DrillMode({
         {hasIncorrectHands && (
           <div className="w-full mb-8 space-y-4">
             <h3 className="text-xl font-semibold text-gray-300 mb-4">Review Mistakes</h3>
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {incorrectHands.map((result, index) => {
                 const cards = parseHandToCards(result.hand);
                 return (
                   <div 
                     key={index}
-                    className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 flex flex-col sm:flex-row items-center gap-4"
+                    className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center"
                   >
-                    <div className="flex items-center gap-4">
-                      <div className="flex -space-x-6">
-                        {cards.map((card, cardIndex) => (
-                          <img
-                            key={cardIndex}
-                            src={getCardImageUrl(card)}
-                            alt={`${card.rank}${card.suit}`}
-                            className="w-16 h-24 object-contain drop-shadow-lg first:rotate-[-5deg] last:rotate-[5deg]"
-                          />
-                        ))}
-                      </div>
+                    <div className="flex -space-x-8 mb-4">
+                      {cards.map((card, cardIndex) => (
+                        <img
+                          key={cardIndex}
+                          src={getCardImageUrl(card)}
+                          alt={`${card.rank}${card.suit}`}
+                          className="w-24 h-36 object-contain drop-shadow-lg first:rotate-[-5deg] last:rotate-[5deg]"
+                        />
+                      ))}
+                    </div>
+
+                    <div className="flex flex-col items-center gap-2">
                       <span className="px-3 py-1.5 bg-poker-violet-900/50 text-poker-violet-200 rounded-lg text-sm font-medium">
                         {result.position}
                       </span>
-                    </div>
 
-                    <div className="flex items-center gap-6 ml-auto">
-                      <div className="text-center">
-                        <p className="text-xs text-gray-400 mb-1">Expected</p>
-                        <span className={`text-sm font-medium ${result.expected ? "text-green-400" : "text-red-400"}`}>
-                          {result.expected ? "Raise" : "Fold"}
-                        </span>
-                      </div>
-                      <div className="h-8 w-px bg-gray-700"></div>
-                      <div className="text-center">
-                        <p className="text-xs text-gray-400 mb-1">Your Answer</p>
-                        <span className={`text-sm font-medium ${result.actual ? "text-green-400" : "text-red-400"}`}>
-                          {result.actual ? "Raise" : "Fold"}
-                        </span>
+                      <div className="flex items-center gap-4 mt-2">
+                        <div className="text-center px-3">
+                          <p className="text-xs text-gray-400 mb-1">Expected</p>
+                          <span className={`text-sm font-medium ${result.expected ? "text-green-400" : "text-red-400"}`}>
+                            {result.expected ? "Raise" : "Fold"}
+                          </span>
+                        </div>
+                        <div className="h-8 w-px bg-gray-700"></div>
+                        <div className="text-center px-3">
+                          <p className="text-xs text-gray-400 mb-1">Your Answer</p>
+                          <span className={`text-sm font-medium ${result.actual ? "text-green-400" : "text-red-400"}`}>
+                            {result.actual ? "Raise" : "Fold"}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -248,12 +245,9 @@ export function DrillMode({
 
   return (
     <>
-      {/* Fixed height container to prevent layout shift */}
-      <div className="h-[48px] mb-6">
-        <Feedback isCorrect={lastAnswerCorrect} show={showFeedback} />
-      </div>
+      <Feedback isCorrect={lastAnswerCorrect} show={showFeedback} />
 
-      <div className="flex flex-col items-center max-w-6xl mx-auto space-y-6">
+      <div className="flex flex-col items-center max-w-6xl mx-auto">
         <div className="relative w-full max-w-3xl aspect-[2/1] mx-auto">
           <div className="absolute inset-0 translate-y-3 rounded-[40%] bg-black/25 blur-xl"></div>
           
@@ -297,7 +291,7 @@ export function DrillMode({
           </div>
         </div>
 
-        <div className="flex justify-center gap-3">
+        <div className="flex justify-center gap-3 mt-6">
           {parseHandToCards(currentHand.cards).map((card, index) => (
             <div key={index} className="transform hover:-translate-y-2 transition-transform">
               <img
@@ -309,7 +303,7 @@ export function DrillMode({
           ))}
         </div>
 
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-4 mt-6">
           <div className="inline-block px-5 py-2.5 bg-gray-800/90 rounded-xl mb-2 border border-poker-violet-700 shadow-lg backdrop-blur-sm">
             <p className="text-gray-300 text-sm uppercase tracking-wider mb-1">Current Position</p>
             <p className="text-xl font-bold text-poker-violet-300">{currentHand.position}</p>
@@ -330,7 +324,7 @@ export function DrillMode({
           </div>
         </div>
 
-        <div className="bg-gray-800/50 rounded-xl p-5 text-center backdrop-blur-sm w-full max-w-sm mx-auto">
+        <div className="bg-gray-800/50 rounded-xl p-5 text-center backdrop-blur-sm w-full max-w-sm mx-auto mt-6">
           <div className="flex items-center justify-center gap-10">
             <div>
               <p className="text-gray-400 text-sm uppercase tracking-wider mb-1">Progress</p>
