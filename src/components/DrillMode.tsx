@@ -28,12 +28,12 @@ function Feedback({ isCorrect, show }: { isCorrect: boolean; show: boolean }) {
   return (
     <div 
       className={`
-        fixed top-8 left-1/2 -translate-x-1/2 z-50
+        fixed bottom-8 left-1/2 -translate-x-1/2 z-50
         flex items-center gap-3 px-6 py-4 rounded-xl shadow-lg
         transition-all duration-500
         ${isCorrect ? 'bg-green-500/90' : 'bg-red-500/90'}
         backdrop-blur-sm
-        ${isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform -translate-y-4'}
+        ${isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'}
       `}
       aria-live="polite"
       role="status"
@@ -120,8 +120,8 @@ export function DrillMode({
     return (
       <div className="w-full max-w-4xl mx-auto px-4 py-8 flex flex-col items-center">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-poker-violet-400/20 to-poker-violet-600/20 mb-4">
-            <Trophy className="w-10 h-10 text-poker-violet-400" />
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-yellow-500/20 mb-4">
+            <Trophy className="w-10 h-10 text-yellow-400" />
           </div>
           <h2 className="text-3xl font-bold mb-2">Drill Complete!</h2>
           <p className="text-gray-400">Here's how you performed</p>
@@ -194,19 +194,19 @@ export function DrillMode({
                     </div>
 
                     <div className="flex items-center justify-center gap-6 mt-4">
-                      <div className="text-center px-4">
+                      <div className="text-center">
                         <p className="text-xs text-gray-400 mb-1">Position</p>
                         <span className="text-sm font-medium text-poker-violet-300">
                           {result.position}
                         </span>
                       </div>
-                      <div className="text-center px-4">
+                      <div className="text-center">
                         <p className="text-xs text-gray-400 mb-1">Expected</p>
                         <span className={`text-sm font-medium ${result.expected ? "text-green-400" : "text-red-400"}`}>
                           {result.expected ? "Raise" : "Fold"}
                         </span>
                       </div>
-                      <div className="text-center px-4">
+                      <div className="text-center">
                         <p className="text-xs text-gray-400 mb-1">Your Answer</p>
                         <span className={`text-sm font-medium ${result.actual ? "text-green-400" : "text-red-400"}`}>
                           {result.actual ? "Raise" : "Fold"}
@@ -323,21 +323,19 @@ export function DrillMode({
           </div>
         </div>
 
-        <div className="bg-gray-800/50 rounded-xl p-5 text-center backdrop-blur-sm w-full max-w-sm mx-auto mt-6">
-          <div className="flex items-center justify-center gap-10">
-            <div>
-              <p className="text-gray-400 text-sm uppercase tracking-wider mb-1">Progress</p>
-              <p className="text-lg font-bold">
-                <span className="text-poker-violet-300">{score.total}</span>
-                <span className="text-gray-500 mx-1">/</span>
-                <span>{selectedDrillLength}</span>
-              </p>
-            </div>
-            <div className="h-12 w-px bg-gray-700"></div>
-            <div>
-              <p className="text-gray-400 text-sm uppercase tracking-wider mb-1">Correct</p>
-              <p className="text-lg font-bold text-green-500">{score.correct}</p>
-            </div>
+        <div className="flex items-center justify-center gap-10 w-full max-w-sm mx-auto mt-6">
+          <div className="text-center">
+            <p className="text-gray-400 text-sm uppercase tracking-wider mb-1">Progress</p>
+            <p className="text-lg font-bold text-center">
+              <span className="text-poker-violet-300">{score.total}</span>
+              <span className="text-gray-500 mx-1">/</span>
+              <span className="text-gray-300">{selectedDrillLength}</span>
+            </p>
+          </div>
+          <div className="h-12 w-px bg-gray-700"></div>
+          <div className="text-center">
+            <p className="text-gray-400 text-sm uppercase tracking-wider mb-1">Correct</p>
+            <p className="text-lg font-bold text-green-500">{score.correct}</p>
           </div>
         </div>
       </div>
