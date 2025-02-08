@@ -6,46 +6,40 @@ import { Trophy, RefreshCw, ArrowLeft, Clock, Target, CheckCircle, XCircle } fro
 
 function Feedback({ isCorrect, show }: { isCorrect: boolean; show: boolean }) {
   const [isVisible, setIsVisible] = useState(false);
-  const [shouldRender, setShouldRender] = useState(false);
 
   useEffect(() => {
     if (show) {
-      setShouldRender(true);
-      requestAnimationFrame(() => {
-        setIsVisible(true);
-      });
+      setIsVisible(true);
     } else {
       setIsVisible(false);
-      const timer = setTimeout(() => {
-        setShouldRender(false);
-      }, 500);
-      return () => clearTimeout(timer);
     }
   }, [show]);
 
-  if (!shouldRender) return null;
-
   return (
     <div 
-      className={`
-        fixed bottom-8 left-1/2 -translate-x-1/2 z-50
-        flex items-center gap-3 px-6 py-4 rounded-xl shadow-lg
-        transition-all duration-500
-        ${isCorrect ? 'bg-green-500/90' : 'bg-red-500/90'}
-        backdrop-blur-sm
-        ${isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'}
-      `}
+      className="fixed bottom-4 left-0 right-0 pointer-events-none flex justify-center"
+      style={{ height: '56px' }}
       aria-live="polite"
       role="status"
     >
-      {isCorrect ? (
-        <CheckCircle className="w-6 h-6" />
-      ) : (
-        <XCircle className="w-6 h-6" />
-      )}
-      <span className="font-bold text-lg">
-        {isCorrect ? 'Correct!' : 'Incorrect'}
-      </span>
+      <div 
+        className={`
+          flex items-center gap-2 px-4 py-2 rounded-lg shadow-lg
+          ${isCorrect ? 'bg-green-500/90' : 'bg-red-500/90'}
+          backdrop-blur-sm
+          transition-opacity duration-300
+          ${isVisible ? 'opacity-100' : 'opacity-0'}
+        `}
+      >
+        {isCorrect ? (
+          <CheckCircle className="w-5 h-5" />
+        ) : (
+          <XCircle className="w-5 h-5" />
+        )}
+        <span className="font-medium text-base">
+          {isCorrect ? 'Correct!' : 'Incorrect'}
+        </span>
+      </div>
     </div>
   );
 }
