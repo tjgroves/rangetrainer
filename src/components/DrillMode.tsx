@@ -180,38 +180,37 @@ export function DrillMode({
                 return (
                   <div 
                     key={index}
-                    className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center"
+                    className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4"
                   >
-                    <div className="flex -space-x-8 mb-4">
+                    <div className="flex justify-center -space-x-10 mb-4">
                       {cards.map((card, cardIndex) => (
                         <img
                           key={cardIndex}
                           src={getCardImageUrl(card)}
                           alt={`${card.rank}${card.suit}`}
-                          className="w-24 h-36 object-contain drop-shadow-lg first:rotate-[-5deg] last:rotate-[5deg]"
+                          className="w-32 h-48 object-contain drop-shadow-lg first:rotate-[-5deg] last:rotate-[5deg]"
                         />
                       ))}
                     </div>
 
-                    <div className="flex flex-col items-center gap-2">
-                      <span className="px-3 py-1.5 bg-poker-violet-900/50 text-poker-violet-200 rounded-lg text-sm font-medium">
-                        {result.position}
-                      </span>
-
-                      <div className="flex items-center gap-4 mt-2">
-                        <div className="text-center px-3">
-                          <p className="text-xs text-gray-400 mb-1">Expected</p>
-                          <span className={`text-sm font-medium ${result.expected ? "text-green-400" : "text-red-400"}`}>
-                            {result.expected ? "Raise" : "Fold"}
-                          </span>
-                        </div>
-                        <div className="h-8 w-px bg-gray-700"></div>
-                        <div className="text-center px-3">
-                          <p className="text-xs text-gray-400 mb-1">Your Answer</p>
-                          <span className={`text-sm font-medium ${result.actual ? "text-green-400" : "text-red-400"}`}>
-                            {result.actual ? "Raise" : "Fold"}
-                          </span>
-                        </div>
+                    <div className="flex items-center justify-center gap-6 mt-4">
+                      <div className="text-center px-4">
+                        <p className="text-xs text-gray-400 mb-1">Position</p>
+                        <span className="text-sm font-medium text-poker-violet-300">
+                          {result.position}
+                        </span>
+                      </div>
+                      <div className="text-center px-4">
+                        <p className="text-xs text-gray-400 mb-1">Expected</p>
+                        <span className={`text-sm font-medium ${result.expected ? "text-green-400" : "text-red-400"}`}>
+                          {result.expected ? "Raise" : "Fold"}
+                        </span>
+                      </div>
+                      <div className="text-center px-4">
+                        <p className="text-xs text-gray-400 mb-1">Your Answer</p>
+                        <span className={`text-sm font-medium ${result.actual ? "text-green-400" : "text-red-400"}`}>
+                          {result.actual ? "Raise" : "Fold"}
+                        </span>
                       </div>
                     </div>
                   </div>
