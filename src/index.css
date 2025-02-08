@@ -1,0 +1,27 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer components {
+  .grid-cols-13 {
+    grid-template-columns: repeat(13, minmax(0, 1fr));
+  }
+}
+
+@layer utilities {
+  .bg-gradient-blur {
+    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1), transparent 70%);
+  }
+}
+
+@keyframes position-pulse {
+  0% {
+    transform: scale(1.1) translateX(-45%) translateY(-45%);
+  }
+  50% {
+    transform: scale(1.15) translateX(-43%) translateY(-43%);
+  }
+  100% {
+    transform: scale(1.1) translateX(-45%) translateY(-45%);
+  }
+}
