@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { DrillResult, HandCell, Position } from '../types';
-import { POSITIONS, RANKS } from '../constants';
+import { RANKS, POSITIONS, DrillLength } from '../constants';
 
 export function useDrillMode(ranges: Record<Position, HandCell[][]>) {
   const [currentHand, setCurrentHand] = useState<{ cards: string; position: Position } | null>(null);
@@ -16,10 +16,9 @@ export function useDrillMode(ranges: Record<Position, HandCell[][]>) {
     setCurrentHand({ cards: hand, position });
   };
 
-  const handleDrillAnswer = (answer: boolean, selectedDrillLength: number) => {
-    if (!currentHand) return;
+  const handleDrillAnswer = (answer: boolean, selectedDrillLength: DrillLength): boolean => {
+    if (!currentHand) return false;
 
-    // Find the exact hand in the ranges
     const isSelected = ranges[currentHand.position].flat().find(
       cell => cell.hand === currentHand.cards
     )?.selected ?? false;
@@ -47,6 +46,8 @@ export function useDrillMode(ranges: Record<Position, HandCell[][]>) {
 
       return newScore;
     });
+
+    return isSelected === answer;
   };
 
   const startDrill = () => {

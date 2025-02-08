@@ -98,7 +98,7 @@ function App() {
               drillComplete={drillComplete}
               selectedDrillLength={selectedDrillLength}
               drillResults={drillResults}
-              handleDrillAnswer={(answer) => handleDrillAnswer(answer, selectedDrillLength)}
+              handleDrillAnswer={handleDrillAnswer}
               setMode={setMode}
               startDrill={startDrill}
             />

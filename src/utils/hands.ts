@@ -1,5 +1,5 @@
 import { HandCell, Position, Rank } from '../types';
-import { RANKS, POSITIONS } from '../constants';
+import { RANKS } from '../constants';
 
 export const generateHandMatrix = (): HandCell[][] => {
   const matrix: HandCell[][] = [];
