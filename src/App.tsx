@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Mode } from './types';
 import { POSITIONS, DRILL_LENGTHS, STORAGE, DrillLength } from './constants';
 import { storage } from './utils/storage';
@@ -32,6 +32,22 @@ function App() {
     handleDrillAnswer,
     startDrill
   } = useDrillMode(ranges);
+
+  // Load the last used preset on mount
+  useEffect(() => {
+    const lastPresetId = storage.get(STORAGE.LAST_PRESET, null);
+    if (lastPresetId) {
+      const preset = presets.find(p => p.id === lastPresetId);
+      if (preset) {
+        setRanges(structuredClone(preset.ranges));
+      }
+    }
+  }, [presets]);
+
+  // Save ranges whenever they change
+  useEffect(() => {
+    storage.set(STORAGE.RANGES, ranges);
+  }, [ranges]);
 
   const toggleHand = (rowIndex: number, colIndex: number) => {
     if (mode === 'drill') return;
