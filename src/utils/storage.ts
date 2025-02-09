@@ -13,7 +13,30 @@ export const storage = {
       if (!item) return fallback;
 
       try {
-        return JSON.parse(item) as T;
+        const data = JSON.parse(item);
+        
+        // Migrate old position names to new ones if needed
+        if (key === 'poker-trainer-ranges' || key === 'poker-trainer-presets') {
+          const migratePositions = (ranges: Record<string, unknown>) => {
+            const newRanges: Record<string, unknown> = {};
+            Object.entries(ranges).forEach(([pos, value]) => {
+              const newPos = pos === 'LJ' ? 'UTG' : pos === 'HJ' ? 'MP' : pos;
+              newRanges[newPos] = value;
+            });
+            return newRanges;
+          };
+
+          if (key === 'poker-trainer-ranges') {
+            return migratePositions(data) as T;
+          } else if (key === 'poker-trainer-presets' && Array.isArray(data)) {
+            return data.map(preset => ({
+              ...preset,
+              ranges: migratePositions(preset.ranges)
+            })) as T;
+          }
+        }
+
+        return data as T;
       } catch (parseError) {
         console.error(`Error parsing stored value for ${key}:`, parseError);
         // If the stored value is corrupted, remove it

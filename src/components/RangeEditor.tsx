@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calculator, Plus, Save, Trash2, Check } from 'lucide-react';
+import { Plus, Save, Trash2, Check, Drill } from 'lucide-react';
 import { HandCell, Position, Preset } from '../types';
 import { POSITIONS, DRILL_LENGTHS, DrillLength } from '../constants';
 
@@ -87,7 +87,7 @@ export function RangeEditor({
               onClick={startDrill}
               className="flex items-center gap-1.5 px-4 py-2 bg-poker-violet-600 hover:bg-poker-violet-500 rounded-lg transition-colors text-white shadow-lg hover:shadow-poker-violet-500/20 text-base font-medium w-full sm:w-auto justify-center sm:justify-start"
             >
-              <Calculator className="w-4 h-4" />
+              <Drill className="w-4 h-4 text-yellow-300" />
               <span>Start Drill</span>
             </button>
           </div>

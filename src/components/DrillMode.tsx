@@ -251,8 +251,8 @@ export function DrillMode({
               {Object.entries({
                 'BTN': { top: '75%', left: '85%' },
                 'CO': { top: '30%', left: '85%' },
-                'HJ': { top: '15%', left: '65%' },
-                'LJ': { top: '15%', left: '35%' },
+                'MP': { top: '15%', left: '65%' },
+                'UTG': { top: '15%', left: '35%' },
                 'SB': { top: '75%', left: '15%' },
                 'BB': { top: '30%', left: '15%' }
               }).map(([pos, { top, left }]) => (
