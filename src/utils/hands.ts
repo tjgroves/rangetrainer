@@ -13,8 +13,8 @@ export const generateHandMatrix = (): HandCell[][] => {
           i === j
             ? `${rank1}${rank1}`
             : i < j
-            ? `${rank1}${rank2}s`
-            : `${rank2}${rank1}o`,
+              ? `${rank1}${rank2}s`
+              : `${rank2}${rank1}o`,
         selected: false,
       });
     }
@@ -53,7 +53,10 @@ export const parseHandToCards = (hand: string): Card[] => {
 
   return [
     { rank: convertRankForUrl(first), suit: "♠" },
-    { rank: convertRankForUrl(second), suit: isPair || !isSuited ? "♥" : "♠" },
+    {
+      rank: convertRankForUrl(second),
+      suit: isPair || !isSuited ? "♥" : "♠",
+    },
   ];
 };
 

@@ -67,7 +67,8 @@ function App() {
     ...presetHandlers,
     save: () => presetHandlers.save(ranges),
     update: () => presetHandlers.update(ranges),
-    load: (preset: any) => setRanges(presetHandlers.load(preset)),
+    load: (preset: Parameters<typeof presetHandlers.load>[0]) =>
+      setRanges(presetHandlers.load(preset)),
   };
 
   return (
