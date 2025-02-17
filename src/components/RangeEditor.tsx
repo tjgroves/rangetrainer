@@ -1,7 +1,7 @@
-import React from 'react';
-import { Plus, Save, Trash2, Check, Drill } from 'lucide-react';
-import { HandCell, Position, Preset } from '../types';
-import { POSITIONS, DRILL_LENGTHS, DrillLength } from '../constants';
+import React from "react";
+import { Plus, Save, Trash2, Check, Drill } from "lucide-react";
+import { HandCell, Position, Preset } from "../types";
+import { POSITIONS, DRILL_LENGTHS, DrillLength } from "../constants";
 
 type RangeEditorProps = {
   currentPosition: number;
@@ -39,7 +39,7 @@ export function RangeEditor({
   newPresetName,
   setNewPresetName,
   activePresetId,
-  presetHandlers
+  presetHandlers,
 }: RangeEditorProps) {
   const position = POSITIONS[currentPosition];
   if (!position || !ranges[position]) return null;
@@ -50,10 +50,15 @@ export function RangeEditor({
       <div className="bg-gray-800/80 rounded-xl p-4 backdrop-blur-sm">
         <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
-            <span className="text-white font-medium whitespace-nowrap">Positions:</span>
+            <span className="text-white font-medium whitespace-nowrap">
+              Positions:
+            </span>
             <div className="flex flex-wrap items-center gap-3">
               {POSITIONS.map((pos, index) => (
-                <label key={pos} className="flex items-center gap-1.5 cursor-pointer">
+                <label
+                  key={pos}
+                  className="flex items-center gap-1.5 cursor-pointer"
+                >
                   <input
                     type="radio"
                     name="position"
@@ -69,8 +74,11 @@ export function RangeEditor({
           </div>
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex flex-wrap items-center gap-3">
-              {DRILL_LENGTHS.map(length => (
-                <label key={length} className="flex items-center gap-1.5 cursor-pointer">
+              {DRILL_LENGTHS.map((length) => (
+                <label
+                  key={length}
+                  className="flex items-center gap-1.5 cursor-pointer"
+                >
                   <input
                     type="radio"
                     name="drillLength"
@@ -79,7 +87,9 @@ export function RangeEditor({
                     onChange={() => setSelectedDrillLength(length)}
                     className="w-4 h-4 bg-gray-700 border-gray-600 focus:ring-1 focus:ring-poker-violet-400"
                   />
-                  <span className="text-sm text-white whitespace-nowrap">{length} hands</span>
+                  <span className="text-sm text-white whitespace-nowrap">
+                    {length} hands
+                  </span>
                 </label>
               ))}
             </div>
@@ -98,7 +108,7 @@ export function RangeEditor({
         {/* Range chart */}
         <div className="bg-gray-800/80 rounded-xl p-4 backdrop-blur-sm order-1">
           <div className="grid grid-cols-13 gap-1">
-            {ranges[position].map((row, rowIndex) => (
+            {ranges[position].map((row, rowIndex) =>
               row.map((cell, colIndex) => {
                 const isPair = cell.hand[0] === cell.hand[1];
                 return (
@@ -109,11 +119,12 @@ export function RangeEditor({
                       relative group h-11 text-sm font-mono rounded-md
                       flex items-center justify-center
                       transition-all duration-200 transform hover:scale-105
-                      ${cell.selected
-                        ? 'bg-poker-violet-600 hover:bg-poker-violet-500 text-white shadow-lg hover:shadow-poker-violet-500/20'
-                        : 'bg-gray-700/90 hover:bg-gray-600 text-gray-100 border border-gray-600/50'
+                      ${
+                        cell.selected
+                          ? "bg-poker-violet-600 hover:bg-poker-violet-500 text-white shadow-lg hover:shadow-poker-violet-500/20"
+                          : "bg-gray-700/90 hover:bg-gray-600 text-gray-100 border border-gray-600/50"
                       }
-                      ${isPair ? 'font-bold' : ''}
+                      ${isPair ? "font-bold" : ""}
                     `}
                   >
                     {cell.hand}
@@ -121,7 +132,7 @@ export function RangeEditor({
                   </button>
                 );
               })
-            ))}
+            )}
           </div>
         </div>
 
@@ -129,7 +140,9 @@ export function RangeEditor({
         <div className="bg-gray-800/80 rounded-xl backdrop-blur-sm flex flex-col order-2">
           <div className="p-4 border-b border-gray-700">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-white">Range Presets</h3>
+              <h3 className="text-lg font-semibold text-white">
+                Range Presets
+              </h3>
               <button
                 onClick={() => setIsAddingPreset(true)}
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-poker-violet-600 hover:bg-poker-violet-500 rounded-lg transition-colors text-sm shadow-lg hover:shadow-poker-violet-500/20 text-white font-medium"
@@ -159,7 +172,7 @@ export function RangeEditor({
                   <button
                     onClick={() => {
                       setIsAddingPreset(false);
-                      setNewPresetName('');
+                      setNewPresetName("");
                     }}
                     className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors text-sm shadow-lg text-white font-medium"
                   >
@@ -171,22 +184,25 @@ export function RangeEditor({
           </div>
 
           <div className="p-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2">
-            {presets.map(preset => {
+            {presets.map((preset) => {
               const isActive = preset.id === activePresetId;
               return (
                 <div
                   key={preset.id}
                   className={`
                     rounded-lg p-3 transition-all duration-200
-                    ${isActive 
-                      ? 'bg-gray-700/90 ring-2 ring-poker-violet-400 shadow-lg shadow-poker-violet-500/10' 
-                      : 'bg-gray-700/50 border border-gray-600/50 hover:bg-gray-700/80'
+                    ${
+                      isActive
+                        ? "bg-gray-700/90 ring-2 ring-poker-violet-400 shadow-lg shadow-poker-violet-500/10"
+                        : "bg-gray-700/50 border border-gray-600/50 hover:bg-gray-700/80"
                     }
                   `}
                 >
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-1.5">
-                      <h4 className="font-medium text-sm text-white">{preset.name}</h4>
+                      <h4 className="font-medium text-sm text-white">
+                        {preset.name}
+                      </h4>
                       {isActive && (
                         <Check className="w-3.5 h-3.5 text-poker-violet-400" />
                       )}
@@ -204,13 +220,14 @@ export function RangeEditor({
                       onClick={() => presetHandlers.load(preset)}
                       className={`
                         flex-1 px-3 py-1.5 rounded-lg transition-colors text-sm shadow-md font-medium
-                        ${isActive 
-                          ? 'bg-poker-violet-600 hover:bg-poker-violet-500 text-white hover:shadow-poker-violet-500/20'
-                          : 'bg-gray-600/80 hover:bg-gray-600 text-white border border-gray-500/50'
+                        ${
+                          isActive
+                            ? "bg-poker-violet-600 hover:bg-poker-violet-500 text-white hover:shadow-poker-violet-500/20"
+                            : "bg-gray-600/80 hover:bg-gray-600 text-white border border-gray-500/50"
                         }
                       `}
                     >
-                      {isActive ? 'Active' : 'Load'}
+                      {isActive ? "Active" : "Load"}
                     </button>
                     {isActive && (
                       <button

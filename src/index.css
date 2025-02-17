@@ -1,6 +1,6 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @layer components {
   .grid-cols-13 {
@@ -10,7 +10,11 @@
 
 @layer utilities {
   .bg-gradient-blur {
-    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1), transparent 70%);
+    background: radial-gradient(
+      circle at center,
+      rgba(59, 130, 246, 0.1),
+      transparent 70%
+    );
   }
 }
 

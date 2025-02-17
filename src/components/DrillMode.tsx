@@ -1,8 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
-import { DrillResult, Position } from '../types';
-import { parseHandToCards } from '../utils/hands';
-import { DrillLength } from '../constants';
-import { Trophy, RefreshCw, ArrowLeft, Clock, Target, CheckCircle, XCircle } from 'lucide-react';
+import { useState, useEffect, useRef } from "react";
+import { DrillResult, Position } from "../types";
+import { parseHandToCards } from "../utils/hands";
+import { DrillLength } from "../constants";
+import {
+  Trophy,
+  RefreshCw,
+  ArrowLeft,
+  Clock,
+  Target,
+  CheckCircle,
+  XCircle,
+} from "lucide-react";
 
 function Feedback({ isCorrect, show }: { isCorrect: boolean; show: boolean }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -16,19 +24,19 @@ function Feedback({ isCorrect, show }: { isCorrect: boolean; show: boolean }) {
   }, [show]);
 
   return (
-    <div 
+    <div
       className="fixed bottom-4 left-0 right-0 pointer-events-none flex justify-center"
-      style={{ height: '56px' }}
+      style={{ height: "56px" }}
       aria-live="polite"
       role="status"
     >
-      <div 
+      <div
         className={`
           flex items-center gap-2 px-4 py-2 rounded-lg shadow-lg
-          ${isCorrect ? 'bg-green-500/90' : 'bg-red-500/90'}
+          ${isCorrect ? "bg-green-500/90" : "bg-red-500/90"}
           backdrop-blur-sm
           transition-opacity duration-300
-          ${isVisible ? 'opacity-100' : 'opacity-0'}
+          ${isVisible ? "opacity-100" : "opacity-0"}
         `}
       >
         {isCorrect ? (
@@ -37,7 +45,7 @@ function Feedback({ isCorrect, show }: { isCorrect: boolean; show: boolean }) {
           <XCircle className="w-5 h-5" />
         )}
         <span className="font-medium text-base">
-          {isCorrect ? 'Correct!' : 'Incorrect'}
+          {isCorrect ? "Correct!" : "Incorrect"}
         </span>
       </div>
     </div>
@@ -51,7 +59,7 @@ type DrillModeProps = {
   selectedDrillLength: DrillLength;
   drillResults: DrillResult[];
   handleDrillAnswer: (answer: boolean, drillLength: DrillLength) => boolean;
-  setMode: (mode: 'edit' | 'drill') => void;
+  setMode: (mode: "edit" | "drill") => void;
   startDrill: () => void;
 };
 
@@ -63,7 +71,7 @@ export function DrillMode({
   drillResults,
   handleDrillAnswer,
   setMode,
-  startDrill
+  startDrill,
 }: DrillModeProps) {
   const [showFeedback, setShowFeedback] = useState(false);
   const [lastAnswerCorrect, setLastAnswerCorrect] = useState(false);
@@ -77,16 +85,16 @@ export function DrillMode({
     };
   }, []);
 
-  const getCardImageUrl = (card: { rank: string; suit: '♠' | '♥' }) => {
+  const getCardImageUrl = (card: { rank: string; suit: "♠" | "♥" }) => {
     const rankMap: Record<string, string> = {
-      '10': '0',
-      'JACK': 'J',
-      'QUEEN': 'Q',
-      'KING': 'K',
-      'ACE': 'A'
+      "10": "0",
+      JACK: "J",
+      QUEEN: "Q",
+      KING: "K",
+      ACE: "A",
     };
     const rank = rankMap[card.rank] || card.rank;
-    const suit = card.suit === '♠' ? 'S' : 'H';
+    const suit = card.suit === "♠" ? "S" : "H";
     return `https://deckofcardsapi.com/static/img/${rank}${suit}.png`;
   };
 
@@ -108,7 +116,7 @@ export function DrillMode({
 
   if (drillComplete) {
     const accuracy = (score.correct / score.total) * 100;
-    const incorrectHands = drillResults.filter(r => r.expected !== r.actual);
+    const incorrectHands = drillResults.filter((r) => r.expected !== r.actual);
     const hasIncorrectHands = incorrectHands.length > 0;
 
     return (
@@ -143,7 +151,11 @@ export function DrillMode({
             <div>
               <p className="text-sm text-gray-400">Accuracy</p>
               <p className="text-xl font-bold">
-                <span className={accuracy >= 70 ? "text-green-400" : "text-yellow-400"}>
+                <span
+                  className={
+                    accuracy >= 70 ? "text-green-400" : "text-yellow-400"
+                  }
+                >
                   {Math.round(accuracy)}%
                 </span>
               </p>
@@ -157,7 +169,13 @@ export function DrillMode({
             <div>
               <p className="text-sm text-gray-400">Incorrect Hands</p>
               <p className="text-xl font-bold">
-                <span className={incorrectHands.length === 0 ? "text-green-400" : "text-red-400"}>
+                <span
+                  className={
+                    incorrectHands.length === 0
+                      ? "text-green-400"
+                      : "text-red-400"
+                  }
+                >
                   {incorrectHands.length}
                 </span>
               </p>
@@ -167,12 +185,14 @@ export function DrillMode({
 
         {hasIncorrectHands && (
           <div className="w-full mb-8 space-y-4">
-            <h3 className="text-xl font-semibold text-gray-300 mb-4">Review Mistakes</h3>
+            <h3 className="text-xl font-semibold text-gray-300 mb-4">
+              Review Mistakes
+            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {incorrectHands.map((result, index) => {
                 const cards = parseHandToCards(result.hand);
                 return (
-                  <div 
+                  <div
                     key={index}
                     className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4"
                   >
@@ -196,13 +216,23 @@ export function DrillMode({
                       </div>
                       <div className="text-center">
                         <p className="text-xs text-gray-400 mb-1">Expected</p>
-                        <span className={`text-sm font-medium ${result.expected ? "text-green-400" : "text-red-400"}`}>
+                        <span
+                          className={`text-sm font-medium ${
+                            result.expected ? "text-green-400" : "text-red-400"
+                          }`}
+                        >
                           {result.expected ? "Raise" : "Fold"}
                         </span>
                       </div>
                       <div className="text-center">
-                        <p className="text-xs text-gray-400 mb-1">Your Answer</p>
-                        <span className={`text-sm font-medium ${result.actual ? "text-green-400" : "text-red-400"}`}>
+                        <p className="text-xs text-gray-400 mb-1">
+                          Your Answer
+                        </p>
+                        <span
+                          className={`text-sm font-medium ${
+                            result.actual ? "text-green-400" : "text-red-400"
+                          }`}
+                        >
                           {result.actual ? "Raise" : "Fold"}
                         </span>
                       </div>
@@ -223,7 +253,7 @@ export function DrillMode({
             Try Again
           </button>
           <button
-            onClick={() => setMode('edit')}
+            onClick={() => setMode("edit")}
             className="w-full sm:flex-1 px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-xl font-bold text-base shadow-lg hover:shadow-gray-500/20 transition-all duration-300 flex items-center justify-center gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -243,29 +273,29 @@ export function DrillMode({
       <div className="flex flex-col items-center max-w-6xl mx-auto">
         <div className="relative w-full max-w-3xl aspect-[2/1] mx-auto">
           <div className="absolute inset-0 translate-y-3 rounded-[40%] bg-black/25 blur-xl"></div>
-          
+
           <div className="absolute inset-0">
             <div className="absolute inset-0 bg-emerald-900 rounded-[40%] border-[14px] border-[#5C4033]">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_60%)]"></div>
 
               {Object.entries({
-                'BTN': { top: '75%', left: '85%' },
-                'CO': { top: '30%', left: '85%' },
-                'MP': { top: '15%', left: '65%' },
-                'UTG': { top: '15%', left: '35%' },
-                'SB': { top: '75%', left: '15%' },
-                'BB': { top: '30%', left: '15%' }
+                BTN: { top: "75%", left: "85%" },
+                CO: { top: "30%", left: "85%" },
+                MP: { top: "15%", left: "65%" },
+                UTG: { top: "15%", left: "35%" },
+                SB: { top: "75%", left: "15%" },
+                BB: { top: "30%", left: "15%" },
               }).map(([pos, { top, left }]) => (
                 <div
                   key={pos}
                   className={`absolute ${
-                    pos === currentHand?.position 
+                    pos === currentHand?.position
                       ? `bg-poker-violet-600
                          border border-white/90
                          animate-[position-pulse_2s_ease-in-out_infinite]
                          z-10
                          text-white
-                         font-black` 
+                         font-black`
                       : `bg-slate-800
                          hover:scale-105
                          -translate-x-1/2 -translate-y-1/2
@@ -286,7 +316,10 @@ export function DrillMode({
 
         <div className="flex justify-center gap-3 mt-6">
           {parseHandToCards(currentHand.cards).map((card, index) => (
-            <div key={index} className="transform hover:-translate-y-2 transition-transform">
+            <div
+              key={index}
+              className="transform hover:-translate-y-2 transition-transform"
+            >
               <img
                 src={getCardImageUrl(card)}
                 alt={`${card.rank}${card.suit}`}
@@ -298,8 +331,12 @@ export function DrillMode({
 
         <div className="text-center space-y-4 mt-6">
           <div className="inline-block px-5 py-2.5 bg-gray-800/90 rounded-xl mb-2 border border-poker-violet-700 shadow-lg backdrop-blur-sm">
-            <p className="text-gray-300 text-sm uppercase tracking-wider mb-1">Current Position</p>
-            <p className="text-xl font-bold text-poker-violet-300">{currentHand.position}</p>
+            <p className="text-gray-300 text-sm uppercase tracking-wider mb-1">
+              Current Position
+            </p>
+            <p className="text-xl font-bold text-poker-violet-300">
+              {currentHand.position}
+            </p>
           </div>
           <div className="flex gap-3 justify-center">
             <button
@@ -319,7 +356,9 @@ export function DrillMode({
 
         <div className="flex items-center justify-center gap-10 w-full max-w-sm mx-auto mt-6">
           <div className="text-center">
-            <p className="text-gray-400 text-sm uppercase tracking-wider mb-1">Progress</p>
+            <p className="text-gray-400 text-sm uppercase tracking-wider mb-1">
+              Progress
+            </p>
             <p className="text-lg font-bold text-center">
               <span className="text-poker-violet-300">{score.total}</span>
               <span className="text-gray-500 mx-1">/</span>
@@ -328,7 +367,9 @@ export function DrillMode({
           </div>
           <div className="h-12 w-px bg-gray-700"></div>
           <div className="text-center">
-            <p className="text-gray-400 text-sm uppercase tracking-wider mb-1">Correct</p>
+            <p className="text-gray-400 text-sm uppercase tracking-wider mb-1">
+              Correct
+            </p>
             <p className="text-lg font-bold text-green-500">{score.correct}</p>
           </div>
         </div>

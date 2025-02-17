@@ -1,9 +1,12 @@
-import { useState } from 'react';
-import { DrillResult, HandCell, Position } from '../types';
-import { RANKS, POSITIONS, DrillLength } from '../constants';
+import { useState } from "react";
+import { DrillResult, HandCell, Position } from "../types";
+import { RANKS, POSITIONS, DrillLength } from "../constants";
 
 export function useDrillMode(ranges: Record<Position, HandCell[][]>) {
-  const [currentHand, setCurrentHand] = useState<{ cards: string; position: Position } | null>(null);
+  const [currentHand, setCurrentHand] = useState<{
+    cards: string;
+    position: Position;
+  } | null>(null);
   const [score, setScore] = useState({ correct: 0, total: 0 });
   const [drillComplete, setDrillComplete] = useState(false);
   const [drillResults, setDrillResults] = useState<DrillResult[]>([]);
@@ -16,28 +19,32 @@ export function useDrillMode(ranges: Record<Position, HandCell[][]>) {
     setCurrentHand({ cards: hand, position });
   };
 
-  const handleDrillAnswer = (answer: boolean, selectedDrillLength: DrillLength): boolean => {
+  const handleDrillAnswer = (
+    answer: boolean,
+    selectedDrillLength: DrillLength
+  ): boolean => {
     if (!currentHand) return false;
 
-    const isSelected = ranges[currentHand.position].flat().find(
-      cell => cell.hand === currentHand.cards
-    )?.selected ?? false;
+    const isSelected =
+      ranges[currentHand.position]
+        .flat()
+        .find((cell) => cell.hand === currentHand.cards)?.selected ?? false;
 
     const result: DrillResult = {
       hand: currentHand.cards,
       position: currentHand.position,
       expected: isSelected,
-      actual: answer
+      actual: answer,
     };
 
-    setDrillResults(prev => [...prev, result]);
+    setDrillResults((prev) => [...prev, result]);
 
-    setScore(prev => {
+    setScore((prev) => {
       const newScore = {
         correct: prev.correct + (isSelected === answer ? 1 : 0),
-        total: prev.total + 1
+        total: prev.total + 1,
       };
-      
+
       if (newScore.total >= selectedDrillLength) {
         setDrillComplete(true);
       } else {
@@ -63,6 +70,6 @@ export function useDrillMode(ranges: Record<Position, HandCell[][]>) {
     drillComplete,
     drillResults,
     handleDrillAnswer,
-    startDrill
+    startDrill,
   };
 }
