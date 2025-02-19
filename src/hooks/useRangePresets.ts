@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { HandCell, Position, Preset } from "../types";
-import { storage } from "../utils/storage";
-import { STORAGE } from "../constants";
+import { useState, useEffect } from 'react';
+import { HandCell, Position, Preset } from '../types';
+import { storage } from '../utils/storage';
+import { STORAGE } from '../constants';
 
 export function useRangePresets() {
   const [presets, setPresets] = useState<Preset[]>(() => {
@@ -11,11 +11,11 @@ export function useRangePresets() {
 
   const [activePresetId, setActivePresetId] = useState<string | null>(() => {
     const lastPresetId = storage.get(STORAGE.LAST_PRESET, null);
-    return typeof lastPresetId === "string" ? lastPresetId : null;
+    return typeof lastPresetId === 'string' ? lastPresetId : null;
   });
 
   const [isAddingPreset, setIsAddingPreset] = useState(false);
-  const [newPresetName, setNewPresetName] = useState("");
+  const [newPresetName, setNewPresetName] = useState('');
 
   // Persist presets whenever they change
   useEffect(() => {
@@ -47,7 +47,7 @@ export function useRangePresets() {
       });
 
       setIsAddingPreset(false);
-      setNewPresetName("");
+      setNewPresetName('');
       setActivePresetId(newPreset.id);
     },
 

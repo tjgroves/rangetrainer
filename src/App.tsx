@@ -1,19 +1,19 @@
-import { useState, useEffect } from "react";
-import { Mode } from "./types";
-import { POSITIONS, DRILL_LENGTHS, STORAGE, DrillLength } from "./constants";
-import { storage } from "./utils/storage";
-import { generateInitialRanges } from "./utils/hands";
-import { RangeEditor } from "./components/RangeEditor";
-import { DrillMode } from "./components/DrillMode";
-import { useRangePresets } from "./hooks/useRangePresets";
-import { useDrillMode } from "./hooks/useDrillMode";
+import { useState, useEffect } from 'react';
+import { Mode } from './types';
+import { POSITIONS, DRILL_LENGTHS, STORAGE, DrillLength } from './constants';
+import { storage } from './utils/storage';
+import { generateInitialRanges } from './utils/hands';
+import { RangeEditor } from './components/RangeEditor';
+import { DrillMode } from './components/DrillMode';
+import { useRangePresets } from './hooks/useRangePresets';
+import { useDrillMode } from './hooks/useDrillMode';
 
 function App() {
   const [currentPosition, setCurrentPosition] = useState(0);
   const [ranges, setRanges] = useState(() =>
     storage.get(STORAGE.RANGES, generateInitialRanges(POSITIONS))
   );
-  const [mode, setMode] = useState<Mode>("edit");
+  const [mode, setMode] = useState<Mode>('edit');
   const [selectedDrillLength, setSelectedDrillLength] = useState<DrillLength>(
     DRILL_LENGTHS[0]
   );
@@ -52,7 +52,7 @@ function App() {
   }, [ranges]);
 
   const toggleHand = (rowIndex: number, colIndex: number) => {
-    if (mode === "drill") return;
+    if (mode === 'drill') return;
 
     const position = POSITIONS[currentPosition];
     setRanges((prev) => {
@@ -72,10 +72,10 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-7xl mx-auto space-y-6">
-          {mode === "edit" ? (
+    <div className='min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white'>
+      <div className='container mx-auto px-4 py-8'>
+        <div className='max-w-7xl mx-auto space-y-6'>
+          {mode === 'edit' ? (
             <RangeEditor
               currentPosition={currentPosition}
               setCurrentPosition={setCurrentPosition}
@@ -84,7 +84,7 @@ function App() {
               selectedDrillLength={selectedDrillLength}
               setSelectedDrillLength={setSelectedDrillLength}
               startDrill={() => {
-                setMode("drill");
+                setMode('drill');
                 startDrill();
               }}
               presets={presets}

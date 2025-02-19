@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import { DrillResult, Position } from "../types";
-import { parseHandToCards } from "../utils/hands";
-import { DrillLength } from "../constants";
+import { useState, useEffect, useRef } from 'react';
+import { DrillResult, Position } from '../types';
+import { parseHandToCards } from '../utils/hands';
+import { DrillLength } from '../constants';
 import {
   Trophy,
   RefreshCw,
@@ -10,7 +10,7 @@ import {
   Target,
   CheckCircle,
   XCircle,
-} from "lucide-react";
+} from 'lucide-react';
 
 function Feedback({ isCorrect, show }: { isCorrect: boolean; show: boolean }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -25,27 +25,27 @@ function Feedback({ isCorrect, show }: { isCorrect: boolean; show: boolean }) {
 
   return (
     <div
-      className="fixed bottom-4 left-0 right-0 pointer-events-none flex justify-center"
-      style={{ height: "56px" }}
-      aria-live="polite"
-      role="status"
+      className='fixed bottom-4 left-0 right-0 pointer-events-none flex justify-center'
+      style={{ height: '56px' }}
+      aria-live='polite'
+      role='status'
     >
       <div
         className={`
           flex items-center gap-2 px-4 py-2 rounded-lg shadow-lg
-          ${isCorrect ? "bg-green-500/90" : "bg-red-500/90"}
+          ${isCorrect ? 'bg-green-500/90' : 'bg-red-500/90'}
           backdrop-blur-sm
           transition-opacity duration-300
-          ${isVisible ? "opacity-100" : "opacity-0"}
+          ${isVisible ? 'opacity-100' : 'opacity-0'}
         `}
       >
         {isCorrect ? (
-          <CheckCircle className="w-5 h-5" />
+          <CheckCircle className='w-5 h-5' />
         ) : (
-          <XCircle className="w-5 h-5" />
+          <XCircle className='w-5 h-5' />
         )}
-        <span className="font-medium text-base">
-          {isCorrect ? "Correct!" : "Incorrect"}
+        <span className='font-medium text-base'>
+          {isCorrect ? 'Correct!' : 'Incorrect'}
         </span>
       </div>
     </div>
@@ -59,7 +59,7 @@ type DrillModeProps = {
   selectedDrillLength: DrillLength;
   drillResults: DrillResult[];
   handleDrillAnswer: (answer: boolean, drillLength: DrillLength) => boolean;
-  setMode: (mode: "edit" | "drill") => void;
+  setMode: (mode: 'edit' | 'drill') => void;
   startDrill: () => void;
 };
 
@@ -85,16 +85,16 @@ export function DrillMode({
     };
   }, []);
 
-  const getCardImageUrl = (card: { rank: string; suit: "♠" | "♥" }) => {
+  const getCardImageUrl = (card: { rank: string; suit: '♠' | '♥' }) => {
     const rankMap: Record<string, string> = {
-      "10": "0",
-      JACK: "J",
-      QUEEN: "Q",
-      KING: "K",
-      ACE: "A",
+      '10': '0',
+      JACK: 'J',
+      QUEEN: 'Q',
+      KING: 'K',
+      ACE: 'A',
     };
     const rank = rankMap[card.rank] || card.rank;
-    const suit = card.suit === "♠" ? "S" : "H";
+    const suit = card.suit === '♠' ? 'S' : 'H';
     return `https://deckofcardsapi.com/static/img/${rank}${suit}.png`;
   };
 
@@ -120,40 +120,40 @@ export function DrillMode({
     const hasIncorrectHands = incorrectHands.length > 0;
 
     return (
-      <div className="w-full max-w-4xl mx-auto px-4 py-8 flex flex-col items-center">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-yellow-500/20 mb-4">
-            <Trophy className="w-10 h-10 text-yellow-400" />
+      <div className='w-full max-w-4xl mx-auto px-4 py-8 flex flex-col items-center'>
+        <div className='text-center mb-8'>
+          <div className='inline-flex items-center justify-center w-20 h-20 rounded-full bg-yellow-500/20 mb-4'>
+            <Trophy className='w-10 h-10 text-yellow-400' />
           </div>
-          <h2 className="text-3xl font-bold mb-2">Drill Complete!</h2>
-          <p className="text-gray-400">Here's how you performed</p>
+          <h2 className='text-3xl font-bold mb-2'>Drill Complete!</h2>
+          <p className='text-gray-400'>Here's how you performed</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full mb-8">
-          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 flex items-center gap-4">
-            <div className="p-3 rounded-lg bg-poker-violet-600/20">
-              <Target className="w-5 h-5 text-poker-violet-400" />
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full mb-8'>
+          <div className='bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 flex items-center gap-4'>
+            <div className='p-3 rounded-lg bg-poker-violet-600/20'>
+              <Target className='w-5 h-5 text-poker-violet-400' />
             </div>
             <div>
-              <p className="text-sm text-gray-400">Score</p>
-              <p className="text-xl font-bold">
-                <span className="text-poker-violet-400">{score.correct}</span>
-                <span className="text-gray-600 mx-1">/</span>
-                <span className="text-gray-300">{score.total}</span>
+              <p className='text-sm text-gray-400'>Score</p>
+              <p className='text-xl font-bold'>
+                <span className='text-poker-violet-400'>{score.correct}</span>
+                <span className='text-gray-600 mx-1'>/</span>
+                <span className='text-gray-300'>{score.total}</span>
               </p>
             </div>
           </div>
 
-          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 flex items-center gap-4">
-            <div className="p-3 rounded-lg bg-poker-violet-600/20">
-              <Clock className="w-5 h-5 text-poker-violet-400" />
+          <div className='bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 flex items-center gap-4'>
+            <div className='p-3 rounded-lg bg-poker-violet-600/20'>
+              <Clock className='w-5 h-5 text-poker-violet-400' />
             </div>
             <div>
-              <p className="text-sm text-gray-400">Accuracy</p>
-              <p className="text-xl font-bold">
+              <p className='text-sm text-gray-400'>Accuracy</p>
+              <p className='text-xl font-bold'>
                 <span
                   className={
-                    accuracy >= 70 ? "text-green-400" : "text-yellow-400"
+                    accuracy >= 70 ? 'text-green-400' : 'text-yellow-400'
                   }
                 >
                   {Math.round(accuracy)}%
@@ -162,18 +162,18 @@ export function DrillMode({
             </div>
           </div>
 
-          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 flex items-center gap-4 sm:col-span-2 lg:col-span-1">
-            <div className="p-3 rounded-lg bg-poker-violet-600/20">
-              <RefreshCw className="w-5 h-5 text-poker-violet-400" />
+          <div className='bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 flex items-center gap-4 sm:col-span-2 lg:col-span-1'>
+            <div className='p-3 rounded-lg bg-poker-violet-600/20'>
+              <RefreshCw className='w-5 h-5 text-poker-violet-400' />
             </div>
             <div>
-              <p className="text-sm text-gray-400">Incorrect Hands</p>
-              <p className="text-xl font-bold">
+              <p className='text-sm text-gray-400'>Incorrect Hands</p>
+              <p className='text-xl font-bold'>
                 <span
                   className={
                     incorrectHands.length === 0
-                      ? "text-green-400"
-                      : "text-red-400"
+                      ? 'text-green-400'
+                      : 'text-red-400'
                   }
                 >
                   {incorrectHands.length}
@@ -184,56 +184,56 @@ export function DrillMode({
         </div>
 
         {hasIncorrectHands && (
-          <div className="w-full mb-8 space-y-4">
-            <h3 className="text-xl font-semibold text-gray-300 mb-4">
+          <div className='w-full mb-8 space-y-4'>
+            <h3 className='text-xl font-semibold text-gray-300 mb-4'>
               Review Mistakes
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
               {incorrectHands.map((result, index) => {
                 const cards = parseHandToCards(result.hand);
                 return (
                   <div
                     key={index}
-                    className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4"
+                    className='bg-gray-800/50 backdrop-blur-sm rounded-xl p-4'
                   >
-                    <div className="flex justify-center -space-x-10 mb-4">
+                    <div className='flex justify-center -space-x-10 mb-4'>
                       {cards.map((card, cardIndex) => (
                         <img
                           key={cardIndex}
                           src={getCardImageUrl(card)}
                           alt={`${card.rank}${card.suit}`}
-                          className="w-32 h-48 object-contain drop-shadow-lg first:rotate-[-5deg] last:rotate-[5deg]"
+                          className='w-32 h-48 object-contain drop-shadow-lg first:rotate-[-5deg] last:rotate-[5deg]'
                         />
                       ))}
                     </div>
 
-                    <div className="flex items-center justify-center gap-6 mt-4">
-                      <div className="text-center">
-                        <p className="text-xs text-gray-400 mb-1">Position</p>
-                        <span className="text-sm font-medium text-poker-violet-300">
+                    <div className='flex items-center justify-center gap-6 mt-4'>
+                      <div className='text-center'>
+                        <p className='text-xs text-gray-400 mb-1'>Position</p>
+                        <span className='text-sm font-medium text-poker-violet-300'>
                           {result.position}
                         </span>
                       </div>
-                      <div className="text-center">
-                        <p className="text-xs text-gray-400 mb-1">Expected</p>
+                      <div className='text-center'>
+                        <p className='text-xs text-gray-400 mb-1'>Expected</p>
                         <span
                           className={`text-sm font-medium ${
-                            result.expected ? "text-green-400" : "text-red-400"
+                            result.expected ? 'text-green-400' : 'text-red-400'
                           }`}
                         >
-                          {result.expected ? "Raise" : "Fold"}
+                          {result.expected ? 'Raise' : 'Fold'}
                         </span>
                       </div>
-                      <div className="text-center">
-                        <p className="text-xs text-gray-400 mb-1">
+                      <div className='text-center'>
+                        <p className='text-xs text-gray-400 mb-1'>
                           Your Answer
                         </p>
                         <span
                           className={`text-sm font-medium ${
-                            result.actual ? "text-green-400" : "text-red-400"
+                            result.actual ? 'text-green-400' : 'text-red-400'
                           }`}
                         >
-                          {result.actual ? "Raise" : "Fold"}
+                          {result.actual ? 'Raise' : 'Fold'}
                         </span>
                       </div>
                     </div>
@@ -244,19 +244,19 @@ export function DrillMode({
           </div>
         )}
 
-        <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-md">
+        <div className='flex flex-col sm:flex-row items-center gap-4 w-full max-w-md'>
           <button
             onClick={startDrill}
-            className="w-full sm:flex-1 px-6 py-3 bg-poker-violet-600 hover:bg-poker-violet-500 rounded-xl font-bold text-base shadow-lg hover:shadow-poker-violet-500/20 transition-all duration-300 flex items-center justify-center gap-2"
+            className='w-full sm:flex-1 px-6 py-3 bg-poker-violet-600 hover:bg-poker-violet-500 rounded-xl font-bold text-base shadow-lg hover:shadow-poker-violet-500/20 transition-all duration-300 flex items-center justify-center gap-2'
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className='w-4 h-4' />
             Try Again
           </button>
           <button
-            onClick={() => setMode("edit")}
-            className="w-full sm:flex-1 px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-xl font-bold text-base shadow-lg hover:shadow-gray-500/20 transition-all duration-300 flex items-center justify-center gap-2"
+            onClick={() => setMode('edit')}
+            className='w-full sm:flex-1 px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-xl font-bold text-base shadow-lg hover:shadow-gray-500/20 transition-all duration-300 flex items-center justify-center gap-2'
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className='w-4 h-4' />
             Back to Editor
           </button>
         </div>
@@ -270,21 +270,21 @@ export function DrillMode({
     <>
       <Feedback isCorrect={lastAnswerCorrect} show={showFeedback} />
 
-      <div className="flex flex-col items-center max-w-6xl mx-auto">
-        <div className="relative w-full max-w-3xl aspect-[2/1] mx-auto">
-          <div className="absolute inset-0 translate-y-3 rounded-[40%] bg-black/25 blur-xl"></div>
+      <div className='flex flex-col items-center max-w-6xl mx-auto'>
+        <div className='relative w-full max-w-3xl aspect-[2/1] mx-auto'>
+          <div className='absolute inset-0 translate-y-3 rounded-[40%] bg-black/25 blur-xl'></div>
 
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-emerald-900 rounded-[40%] border-[14px] border-[#5C4033]">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_60%)]"></div>
+          <div className='absolute inset-0'>
+            <div className='absolute inset-0 bg-emerald-900 rounded-[40%] border-[14px] border-[#5C4033]'>
+              <div className='absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_60%)]'></div>
 
               {Object.entries({
-                BTN: { top: "75%", left: "85%" },
-                CO: { top: "30%", left: "85%" },
-                MP: { top: "15%", left: "65%" },
-                UTG: { top: "15%", left: "35%" },
-                SB: { top: "75%", left: "15%" },
-                BB: { top: "30%", left: "15%" },
+                BTN: { top: '75%', left: '85%' },
+                CO: { top: '30%', left: '85%' },
+                MP: { top: '15%', left: '65%' },
+                UTG: { top: '15%', left: '35%' },
+                SB: { top: '75%', left: '15%' },
+                BB: { top: '30%', left: '15%' },
               }).map(([pos, { top, left }]) => (
                 <div
                   key={pos}
@@ -314,63 +314,63 @@ export function DrillMode({
           </div>
         </div>
 
-        <div className="flex justify-center gap-3 mt-6">
+        <div className='flex justify-center gap-3 mt-6'>
           {parseHandToCards(currentHand.cards).map((card, index) => (
             <div
               key={index}
-              className="transform hover:-translate-y-2 transition-transform"
+              className='transform hover:-translate-y-2 transition-transform'
             >
               <img
                 src={getCardImageUrl(card)}
                 alt={`${card.rank}${card.suit}`}
-                className="w-28 h-42 object-contain drop-shadow-xl"
+                className='w-28 h-42 object-contain drop-shadow-xl'
               />
             </div>
           ))}
         </div>
 
-        <div className="text-center space-y-4 mt-6">
-          <div className="inline-block px-5 py-2.5 bg-gray-800/90 rounded-xl mb-2 border border-poker-violet-700 shadow-lg backdrop-blur-sm">
-            <p className="text-gray-300 text-sm uppercase tracking-wider mb-1">
+        <div className='text-center space-y-4 mt-6'>
+          <div className='inline-block px-5 py-2.5 bg-gray-800/90 rounded-xl mb-2 border border-poker-violet-700 shadow-lg backdrop-blur-sm'>
+            <p className='text-gray-300 text-sm uppercase tracking-wider mb-1'>
               Current Position
             </p>
-            <p className="text-xl font-bold text-poker-violet-300">
+            <p className='text-xl font-bold text-poker-violet-300'>
               {currentHand.position}
             </p>
           </div>
-          <div className="flex gap-3 justify-center">
+          <div className='flex gap-3 justify-center'>
             <button
               onClick={() => handleAnswer(false)}
-              className="px-7 py-2.5 bg-red-600 rounded-xl hover:bg-red-500 font-bold min-w-[130px] text-base shadow-lg hover:shadow-red-500/20 transition-all duration-300"
+              className='px-7 py-2.5 bg-red-600 rounded-xl hover:bg-red-500 font-bold min-w-[130px] text-base shadow-lg hover:shadow-red-500/20 transition-all duration-300'
             >
               Fold
             </button>
             <button
               onClick={() => handleAnswer(true)}
-              className="px-7 py-2.5 bg-green-600 rounded-xl hover:bg-green-500 font-bold min-w-[130px] text-base shadow-lg hover:shadow-green-500/20 transition-all duration-300"
+              className='px-7 py-2.5 bg-green-600 rounded-xl hover:bg-green-500 font-bold min-w-[130px] text-base shadow-lg hover:shadow-green-500/20 transition-all duration-300'
             >
               Raise
             </button>
           </div>
         </div>
 
-        <div className="flex items-center justify-center gap-10 w-full max-w-sm mx-auto mt-6">
-          <div className="text-center">
-            <p className="text-gray-400 text-sm uppercase tracking-wider mb-1">
+        <div className='flex items-center justify-center gap-10 w-full max-w-sm mx-auto mt-6'>
+          <div className='text-center'>
+            <p className='text-gray-400 text-sm uppercase tracking-wider mb-1'>
               Progress
             </p>
-            <p className="text-lg font-bold text-center">
-              <span className="text-poker-violet-300">{score.total}</span>
-              <span className="text-gray-500 mx-1">/</span>
-              <span className="text-gray-300">{selectedDrillLength}</span>
+            <p className='text-lg font-bold text-center'>
+              <span className='text-poker-violet-300'>{score.total}</span>
+              <span className='text-gray-500 mx-1'>/</span>
+              <span className='text-gray-300'>{selectedDrillLength}</span>
             </p>
           </div>
-          <div className="h-12 w-px bg-gray-700"></div>
-          <div className="text-center">
-            <p className="text-gray-400 text-sm uppercase tracking-wider mb-1">
+          <div className='h-12 w-px bg-gray-700'></div>
+          <div className='text-center'>
+            <p className='text-gray-400 text-sm uppercase tracking-wider mb-1'>
               Correct
             </p>
-            <p className="text-lg font-bold text-green-500">{score.correct}</p>
+            <p className='text-lg font-bold text-green-500'>{score.correct}</p>
           </div>
         </div>
       </div>

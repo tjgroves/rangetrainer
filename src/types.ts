@@ -1,21 +1,21 @@
 // Game types
 export type Rank =
-  | "A"
-  | "K"
-  | "Q"
-  | "J"
-  | "T"
-  | "9"
-  | "8"
-  | "7"
-  | "6"
-  | "5"
-  | "4"
-  | "3"
-  | "2";
-export type Position = "BTN" | "CO" | "MP" | "UTG";
-export type Mode = "edit" | "drill";
-export type HandType = "pair" | "suited" | "offsuit";
+  | 'A'
+  | 'K'
+  | 'Q'
+  | 'J'
+  | 'T'
+  | '9'
+  | '8'
+  | '7'
+  | '6'
+  | '5'
+  | '4'
+  | '3'
+  | '2';
+export type Position = 'BTN' | 'CO' | 'MP' | 'UTG';
+export type Mode = 'edit' | 'drill';
+export type HandType = 'pair' | 'suited' | 'offsuit';
 
 export type HandCell = {
   hand: string;

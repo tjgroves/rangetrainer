@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { DrillResult, HandCell, Position } from "../types";
-import { RANKS, POSITIONS, DrillLength } from "../constants";
+import { useState } from 'react';
+import { DrillResult, HandCell, Position } from '../types';
+import { RANKS, POSITIONS, DrillLength } from '../constants';
 
 export function useDrillMode(ranges: Record<Position, HandCell[][]>) {
   const [currentHand, setCurrentHand] = useState<{

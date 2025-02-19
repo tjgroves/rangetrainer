@@ -1,5 +1,5 @@
-import { HandCell, Position, Rank } from "../types";
-import { RANKS } from "../constants";
+import { HandCell, Position, Rank } from '../types';
+import { RANKS } from '../constants';
 
 export const generateHandMatrix = (): HandCell[][] => {
   const matrix: HandCell[][] = [];
@@ -35,43 +35,43 @@ export const generateInitialRanges = (
 
 type Card = {
   rank: string;
-  suit: "♠" | "♥";
+  suit: '♠' | '♥';
 };
 
 export const parseHandToCards = (hand: string): Card[] => {
   if (!hand || hand.length < 2) {
-    throw new Error("Invalid hand format");
+    throw new Error('Invalid hand format');
   }
 
   const [first, second] = hand;
   const isPair = first === second;
-  const isSuited = hand.includes("s");
+  const isSuited = hand.includes('s');
 
   if (!RANKS.includes(first as Rank) || !RANKS.includes(second as Rank)) {
-    throw new Error("Invalid card ranks");
+    throw new Error('Invalid card ranks');
   }
 
   return [
-    { rank: convertRankForUrl(first), suit: "♠" },
+    { rank: convertRankForUrl(first), suit: '♠' },
     {
       rank: convertRankForUrl(second),
-      suit: isPair || !isSuited ? "♥" : "♠",
+      suit: isPair || !isSuited ? '♥' : '♠',
     },
   ];
 };
 
 const convertRankForUrl = (rank: string): string => {
   switch (rank) {
-    case "T":
-      return "10";
-    case "J":
-      return "JACK";
-    case "Q":
-      return "QUEEN";
-    case "K":
-      return "KING";
-    case "A":
-      return "ACE";
+    case 'T':
+      return '10';
+    case 'J':
+      return 'JACK';
+    case 'Q':
+      return 'QUEEN';
+    case 'K':
+      return 'KING';
+    case 'A':
+      return 'ACE';
     default:
       return rank;
   }
